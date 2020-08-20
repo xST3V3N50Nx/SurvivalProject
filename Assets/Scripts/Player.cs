@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     //Variables
     public float maxHealth, maxThirst, maxHunger;
     public float thirstIncreaseRate, hungerIncreaseRate;
-    private float health, thirst, hunger;
+    public float health, thirst, hunger;
 
     public bool playerDead;
     //Functions
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
     {
 
         //Thirst and Hunger increase
-        if(!playerDead)
+        if (!playerDead)
         {
             thirst += thirstIncreaseRate * Time.deltaTime;
             hunger += hungerIncreaseRate * Time.deltaTime;
@@ -30,9 +31,12 @@ public class Player : MonoBehaviour
         //Change to reduce HP over time
         if (thirst >= maxThirst)
             Die();
-        if (thirst >= maxHunger)
+        if (hunger >= maxHunger)
             Die();
 
+        
+
+       
     }
 
     public void Die()
@@ -41,5 +45,17 @@ public class Player : MonoBehaviour
         playerDead = true;
         print("You Have Died From Malnutrition");
     }
+
+    public void Drink(float decreaseRate)
+    {
+        thirst -= decreaseRate;
+    }
+
+    public void Eat(float decreaseRate)
+    {
+        hunger -= decreaseRate;
+    }
+
+
 
 }

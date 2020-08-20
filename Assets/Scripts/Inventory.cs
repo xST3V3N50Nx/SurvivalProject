@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject inventory;
     public GameObject slotHolder;
+    public GameObject itemManager;
     private bool inventoryEnabled;
 
     private int slots;
@@ -32,9 +33,9 @@ public class Inventory : MonoBehaviour
         }
 
         if (inventoryEnabled)
-            inventory.SetActive(true);
+            inventory.GetComponent<Canvas>().enabled = true;
         else
-            inventory.SetActive(false);
+            inventory.GetComponent<Canvas>().enabled = false;
     }
 
 
@@ -65,6 +66,16 @@ public class Inventory : MonoBehaviour
             {
                 slot[i].GetComponent<Slot>().item = itemPickedUp;
                 slot[i].GetComponent<Slot>().itemIcon = itemPickedUp.GetComponent<Item>().icon;
+
+                item.transform.parent = itemManager.transform;
+                item.transform.position = itemManager.transform.position;
+
+                if (item.GetComponent<MeshRenderer>())
+                    item.GetComponent<MeshRenderer>().enabled = false;
+
+                Destroy(item.GetComponent<Rigidbody>());
+
+
                 itemAdded = true;
             }
         }
@@ -72,10 +83,15 @@ public class Inventory : MonoBehaviour
 
     public void DetectInventorySlots()
     {
+        
+        
+
         for(int i = 0; i < slots; i++)
         {
             slot[i] = slotHolder.transform.GetChild(i);
            
         }
+    
+
     }
 }

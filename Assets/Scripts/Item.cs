@@ -7,5 +7,8 @@ public class Item : MonoBehaviour
 
     public Texture icon;
 
+    public string type;
+    public float decreaseRate;
+
  
 }
